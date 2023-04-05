@@ -1,6 +1,8 @@
 package com.example.android.dagger.di
 
 import com.example.android.dagger.storage.Storage
+import com.example.android.dagger.storage.FakeStorage
+
 import dagger.Binds
 import dagger.Module
 
