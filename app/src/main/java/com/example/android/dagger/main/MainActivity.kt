@@ -31,11 +31,12 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var userManager: UserManager
+    //@Inject lateinit var userManager: UserManager
 
     @Inject
     lateinit var mainViewModel: MainViewModel
+
+
 
     /**
      * If the User is not registered, RegistrationActivity will be launched,
@@ -43,10 +44,11 @@ class MainActivity : AppCompatActivity() {
      * else carry on with MainActivity
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.inject(this)
+        //(application as MyApplication).appComponent.inject(this)
 
         super.onCreate(savedInstanceState)
 
+        val userManager = (application as MyApplication).appComponent.userManager()
 
         ///val userManager = (application as MyApplication).userManager
         if (!userManager.isUserLoggedIn()) {
@@ -59,7 +61,9 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             setContentView(R.layout.activity_main)
-
+            // 3) If the MainActivity needs to be displayed, we get the UserComponent
+            // from the application graph and gets this Activity injected
+            userManager.userComponent!!.inject(this)
             ///mainViewModel = MainViewModel(userManager.userDataRepository!!)
             setupViews()
         }
