@@ -44,28 +44,15 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         //(application as MyApplication).appComponent.inject(this)
-
         super.onCreate(savedInstanceState)
-
         val userManager = (application as MyApplication).appComponent.userManager()
-
         ///val userManager = (application as MyApplication).userManager
-        if (!userManager.isUserLoggedIn()) {
-            if (!userManager.isUserRegistered()) {
-                startActivity(Intent(this, RegistrationActivity::class.java))
-                finish()
-            } else {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            }
-        } else {
-            setContentView(R.layout.activity_main)
-            // 3) If the MainActivity needs to be displayed, we get the UserComponent
-            // from the application graph and gets this Activity injected
-            userManager.userComponent!!.inject(this)
-            ///mainViewModel = MainViewModel(userManager.userDataRepository!!)
-            setupViews()
-        }
+        setContentView(R.layout.activity_main)
+        // 3) If the MainActivity needs to be displayed, we get the UserComponent
+        // from the application graph and gets this Activity injected
+        userManager.userComponent!!.inject(this)
+        ///mainViewModel = MainViewModel(userManager.userDataRepository!!)
+        setupViews()
     }
 
     /**
